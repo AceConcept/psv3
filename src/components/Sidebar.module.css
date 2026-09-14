@@ -1,0 +1,1009 @@
+.sideNav {
+  /* White front rail width. Tabs attach to the rail’s right edge. */
+  --slot-rail-w: 2.5rem; /* 40px */
+  --slot-rail-origin: 0px; /* set in JS: distance from viewport left → .sideNav */
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.sideNavRailBack {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  left: calc(-1 * var(--slot-rail-origin));
+  width: calc(var(--slot-rail-origin) + 7.5rem); /* 120px */
+  background: #fff;
+  box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25); /* 0 4 4 0 #000 @ 25% */
+  pointer-events: none;
+}
+
+.sideNavRail {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  /* From viewport left edge to the tab attachment line */
+  left: calc(-1 * var(--slot-rail-origin));
+  width: calc(var(--slot-rail-origin) + var(--slot-rail-w));
+  background: #fff;
+  box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25); /* 0 4 4 0 #000 @ 25% */
+  pointer-events: none;
+}
+
+.sideNavCards {
+  position: absolute;
+  left: 0.4375rem; /* 7px */
+  /* Logo top 22 + 52 icon + 42 gap = 116px */
+  top: 7.25rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 24px between tabs */
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.sideNavBrand {
+  position: absolute;
+  left: var(--slot-rail-w); /* 40px — rail’s right edge */
+  top: 1.375rem; /* 22px from viewport/sidebar top */
+  z-index: 3;
+  display: block;
+  width: 3.25rem; /* 52px */
+  height: 3.25rem; /* 52px */
+  margin-left: -0.25rem; /* cancel 4px SVG shadow inset — flush to rail */
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 1.25rem;
+  padding-left: 0;
+  box-sizing: content-box;
+  object-fit: contain;
+}
+
+.sideNavAbout {
+  position: fixed;
+  left: var(--slot-rail-origin);
+  bottom: 1.5rem; /* was 2.5rem; +16px down */
+  z-index: 50;
+  /* Fill from sidebar left to the right edge of the viewport */
+  width: calc(100vw - var(--slot-rail-origin));
+  padding-left: 1.5rem; /* 24px */
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.sideNavAboutTabRow {
+  position: relative;
+  width: 100%;
+  height: 1.5rem; /* 24px */
+  min-width: 0;
+}
+
+.sideNavAboutTab {
+  position: absolute;
+  left: 0.375rem; /* 6px — tab only, rail stays full-bleed */
+  top: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  box-sizing: border-box;
+  width: 8.125rem; /* 130px */
+  height: 1.5rem; /* 24px */
+  padding: 0 0.5rem 0 0.5rem; /* 8px left (and right) */
+  background: #000;
+  color: #a8a8a8;
+}
+
+.sideNavAboutTabRail {
+  display: block;
+  width: 100%;
+  height: 1.5rem; /* 24px */
+  background-color: #d9d9d9;
+  -webkit-mask-image: url('/assets/Sidebar/About-Section/about-rail.svg');
+  mask-image: url('/assets/Sidebar/About-Section/about-rail.svg');
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sideNavAboutTabLabel {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 0.875rem; /* 14px */
+  line-height: normal;
+  letter-spacing: 0;
+  text-align: left;
+  color: #a8a8a8;
+}
+
+.sideNavAboutTabIcon {
+  display: block;
+  width: 0.75rem; /* 12px */
+  height: 0.75rem;
+  flex-shrink: 0;
+  color: #a8a8a8;
+}
+
+.sideNavAboutPanel {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.875rem 0 1rem;
+  background: #2c2c2e;
+  color: #f0f0f0;
+}
+
+.sideNavAboutRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4.375rem; /* 70px */
+  width: 100%;
+  min-width: 0;
+  padding-left: 1rem;
+}
+
+.sideNavAboutCopy {
+  width: 30.4375rem; /* 487px */
+  max-width: 30.4375rem;
+  flex: 0 0 30.4375rem;
+  min-width: 0;
+}
+
+.sideNavAboutAccent {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 1.9375rem; /* 31px */
+  background: #515151;
+}
+
+.sideNavAboutTitle {
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 0.875rem; /* 14px */
+  line-height: normal;
+  letter-spacing: 0;
+  text-align: left;
+  color: #d5d5d5;
+}
+
+.sideNavAboutRule {
+  width: 27rem; /* 432px */
+  height: 0.0625rem;
+  margin: 0.5rem 0 0.625rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sideNavAboutBody {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 0.875rem; /* 14px */
+  line-height: normal;
+  letter-spacing: 0;
+  text-align: left;
+  color: #d5d5d5;
+}
+
+.sideNavIconWrap {
+  position: fixed;
+  /* Aligned to main separator top via JS; fallback ≈ panel pad + title + sep margin */
+  top: calc(3.1875rem + 1.25rem + 0.875rem);
+  right: 0;
+  z-index: 60;
+  margin: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sideNavIconStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+.sideNavIconButton {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 4.25rem; /* 68px */
+  height: 5.5rem; /* 88px */
+  padding: 0.625rem 0.75rem 0.75rem;
+  border: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background: #1a1a1a;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: -0.125rem 0.1875rem 0.75rem rgba(0, 0, 0, 0.18);
+  font: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.sideNavIconButton:hover {
+  background: #2e2e2e;
+}
+
+.sideNavIconButton:hover .sideNavIconImage {
+  filter: brightness(0) invert(1);
+}
+
+.sideNavIconMark {
+  position: absolute;
+  left: 0.3125rem; /* 5px */
+  bottom: 0.3125rem; /* 5px */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 1.25rem;
+  height: 1.25rem;
+  pointer-events: none;
+}
+
+.sideNavIconImage {
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
+  object-fit: contain;
+  /* Force icon glyphs to #E3E3E3 */
+  filter: brightness(0) invert(0.89);
+  transition: filter 0.2s ease;
+}
+
+.sideNavIconLabel {
+  position: absolute;
+  top: 0.3125rem; /* 5px */
+  left: 0.3125rem; /* 5px */
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start; /* tick flush to top of title */
+  gap: 0.1875rem; /* 3px */
+  font-family: var(--font-family);
+  font-size: 0.75rem; /* 12px */
+  font-weight: 500; /* Medium */
+  line-height: 0.875rem; /* 14px — matches Figma text box height */
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.sideNavIconTick {
+  display: block;
+  width: 0.125rem; /* 2px */
+  height: 0.1875rem; /* 3px */
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 15.625rem;
+  min-width: 15.625rem;
+  height: 4.5625rem;
+  min-height: 4.5625rem;
+  padding: 1.125rem 1.25rem 1.125rem 1.5625rem;
+  margin-left: 1.0625rem;
+  border: none;
+  outline: none;
+  border-radius: 0 0.1875rem 0.1875rem 0;
+  box-shadow: 0.25rem 0.25rem 0.6875rem 0 rgba(150, 150, 150, 0.2);
+  overflow: visible;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  background-color: #d0d0d0;
+  background-size: cover;
+  background-position: center;
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    min-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemActive {
+  width: 17.5rem;
+  min-width: 17.5rem;
+  height: 5.8125rem;
+  min-height: 5.8125rem;
+  margin-left: 0;
+  border-radius: 0.1875rem;
+  box-shadow: 0.25rem 0.25rem 0.6875rem 0 rgba(150, 150, 150, 0.8);
+}
+
+.navActiveRect {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 0.6875rem);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  width: 0.5rem;
+  height: 5.8125rem;
+  pointer-events: none;
+}
+
+.navActiveRectTop {
+  flex: 49 1 0;
+  background: var(--indicator-top, #262626);
+}
+
+.navActiveRectMid {
+  flex: 15 1 0;
+  background: var(--indicator-mid, #ff4545);
+}
+
+.navActiveRectBottom {
+  flex: 30 1 0;
+  background: var(--indicator-bottom, #ffe83c);
+}
+
+.navItem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to right,
+    rgba(252, 252, 252, 1) 0%,
+    rgba(255, 255, 255, 1) 34%,
+    rgba(255, 255, 255, 0.8) 53%,
+    rgba(255, 255, 255, 0.3) 73%,
+    rgba(230, 230, 230, 0) 100%
+  );
+}
+
+.navItem::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to right,
+    rgba(201, 201, 201, 1) 0%,
+    rgba(201, 201, 201, 0.9) 34%,
+    rgba(201, 201, 201, 0.61) 53%,
+    rgba(201, 201, 201, 0.05) 73%,
+    rgba(201, 201, 201, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.navItem:not(.navItemActive):hover::after {
+  opacity: 1;
+}
+
+.navItemActive::before {
+  background: linear-gradient(
+    to right,
+    rgba(40, 40, 40, 1) 39%,
+    rgba(40, 40, 40, 0) 67%
+  );
+}
+
+.navLabelWrap {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.navLabelBlock {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.navTitleGraphic {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.3125rem);
+  z-index: 3;
+  display: block;
+  width: 2.4375rem;
+  height: 0.25rem;
+  background-color: #fff;
+  -webkit-mask-image: url('/home/tab-graphics/act-title.svg');
+  mask-image: url('/home/tab-graphics/act-title.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  pointer-events: none;
+}
+
+.navItem:not(.navItemActive) .navTitleGraphic {
+  width: 1.95rem;
+  height: 0.2rem;
+  background-color: #484848;
+}
+
+.navLabelBlur {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: 0;
+  width: calc(100% + 0.9375rem);
+  height: 1.875rem;
+  transform: translateY(-50%);
+  background: rgba(254, 254, 254, 0.7);
+  filter: blur(0.625rem);
+  pointer-events: none;
+}
+
+.navItem:not(.navItemActive):hover .navLabelBlur {
+  background: rgba(201, 201, 201, 0.35);
+}
+
+.navItemActive .navLabelBlur {
+  background: rgba(41, 41, 41, 0.8);
+}
+
+.navLabel {
+  position: relative;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #434343;
+  text-shadow: 0 0 0.0625rem #929292;
+}
+
+.navItem:not(.navItemActive):hover .navLabel {
+  color: #4a4418;
+}
+
+.navItemActive .navLabel {
+  color: #fff;
+  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.95);
+}
+
+/* New tab design — active (28px) ↔ inactive (22px) with smooth transitions */
+.navItemSlotGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: fit-content;
+  /* Stay on the white rail’s right edge (via .sideNavCards margin) */
+  margin-left: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  line-height: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.navItemSlotGroup:focus-visible {
+  outline: 0.125rem solid #ffe83c;
+  outline-offset: 0.25rem;
+}
+
+.navItemSlotHorConn {
+  display: block;
+  width: 0.5rem; /* 8px */
+  flex-shrink: 0;
+  object-fit: fill;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotHorConn {
+  height: 3.625rem; /* 58px — 28 + 2 + 28 */
+}
+
+.navItemSlotGroupInactive .navItemSlotHorConn {
+  height: 2.875rem; /* 46px — 22 + 2 + 22 */
+}
+
+.navItemSlotStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem; /* 2px */
+  width: fit-content;
+}
+
+.navItemSlot {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: fit-content;
+  line-height: 0;
+}
+
+.navItemSlotConnector {
+  display: block;
+  width: 1.5625rem; /* 25px */
+  flex-shrink: 0;
+  object-fit: fill;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotConnector {
+  height: 1.75rem; /* 28px */
+}
+
+.navItemSlotGroupInactive .navItemSlotConnector {
+  height: 1.375rem; /* 22px */
+}
+
+.navItemSlotBodyWrap {
+  position: relative;
+  width: 11.5rem; /* 184px — inactive */
+  flex-shrink: 0;
+  border-top-right-radius: 0.1875rem; /* 3px */
+  overflow: hidden;
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotBodyWrap {
+  width: 12.625rem; /* 202px */
+  height: 1.75rem; /* 28px */
+  background-color: transparent;
+}
+
+.navItemSlotGroupInactive .navItemSlotBodyWrap {
+  height: 1.375rem; /* 22px */
+  background-color: #cecece;
+}
+
+.navItemSlotBody {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotBody {
+  opacity: 1;
+}
+
+.navItemSlotGroupInactive .navItemSlotBody {
+  opacity: 0;
+}
+
+.navItemSlotChip {
+  position: absolute;
+  right: 0.375rem; /* 6px */
+  display: block;
+  width: 0.75rem; /* 12px */
+  height: 0.75rem; /* 12px */
+  pointer-events: none;
+  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotChip {
+  top: 0.5625rem; /* 9px */
+}
+
+.navItemSlotGroupInactive .navItemSlotChip {
+  top: 0.3125rem; /* 5px */
+}
+
+.navItemSlotBodyPlain {
+  position: relative;
+  width: 11.5rem; /* 184px — inactive */
+  flex-shrink: 0;
+  border-bottom-right-radius: 0.1875rem; /* 3px */
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotBodyPlain {
+  width: 12.625rem; /* 202px */
+  height: 1.75rem; /* 28px */
+  background-color: #2c2c2e;
+}
+
+.navItemSlotGroupInactive .navItemSlotBodyPlain {
+  height: 1.375rem; /* 22px */
+  background-color: #cecece;
+}
+
+.navItemSlotBodyLabel {
+  position: absolute;
+  right: 0.375rem; /* 6px */
+  font-family: var(--font-family);
+  font-weight: 500; /* Medium */
+  line-height: normal; /* Auto */
+  letter-spacing: 0;
+  text-align: right;
+  white-space: nowrap;
+  pointer-events: none;
+  transition:
+    top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navItemSlotGroupActive .navItemSlotBodyLabel {
+  top: 0.25rem; /* 4px */
+  font-size: 0.9375rem; /* 15px */
+  color: #f0f0f0;
+}
+
+.sideNavTop {
+  /* Children stay absolutely positioned against .sideNav on desktop */
+  display: contents;
+}
+
+.sideNavActiveLabel,
+.sideNavMenuToggle {
+  display: none;
+}
+
+.sideNavMenuToggleBars {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 1.125rem;
+  height: 0.75rem;
+}
+
+.sideNavMenuToggleBars > span {
+  display: block;
+  width: 100%;
+  height: 0.125rem;
+  background: currentColor;
+  border-radius: 0.0625rem;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navItemSlotGroupInactive .navItemSlotBodyLabel {
+  top: 0.0625rem; /* 1px */
+  font-size: 0.875rem; /* 14px */
+  color: #3b3b3b;
+}
+
+/* —— Tablet (<1280) —— */
+@media (max-width: 1279px) {
+  .sideNav {
+    --slot-rail-w: 2rem;
+  }
+
+  .sideNavRailBack {
+    width: calc(var(--slot-rail-origin) + 6.25rem);
+  }
+
+  .sideNavBrand {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 1rem;
+  }
+
+  .sideNavCards {
+    top: 5.5rem;
+    left: 0.25rem;
+    gap: 1rem;
+  }
+
+  .sideNavAbout {
+    padding-left: 1rem;
+    padding-right: 5rem;
+    bottom: 1rem;
+  }
+
+  .sideNavAboutCopy {
+    width: min(100%, 28rem);
+  }
+
+  .sideNavAboutAccent {
+    display: none;
+  }
+
+  .sideNavIconWrap {
+    right: 0;
+  }
+
+  .sideNavIconButton {
+    width: 3.75rem;
+    height: 4.75rem;
+  }
+}
+
+/* —— Mobile (<768) —— */
+@media (max-width: 767px) {
+  .sideNav {
+    --slot-rail-w: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sideNavRailBack,
+  .sideNavRail {
+    display: none;
+  }
+
+  .sideNavTop {
+    position: relative;
+    z-index: 70;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    box-sizing: border-box;
+    background: #fff;
+    border-bottom: 0.0625rem solid #e8e8e8;
+  }
+
+  .sideNavBrand {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-left: 0;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .sideNavActiveLabel {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--font-family);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sideNavMenuToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    padding: 0;
+    border: 0.0625rem solid #d0d0d0;
+    border-radius: 0.25rem;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+  }
+
+  .sideNavMenuOpen .sideNavMenuToggleBars > span:nth-child(1) {
+    transform: translateY(0.3125rem) rotate(45deg);
+  }
+
+  .sideNavMenuOpen .sideNavMenuToggleBars > span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .sideNavMenuOpen .sideNavMenuToggleBars > span:nth-child(3) {
+    transform: translateY(-0.3125rem) rotate(-45deg);
+  }
+
+  .sideNavCards {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 80;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.75rem;
+    background: #fff;
+    border-bottom: 0.0625rem solid #e8e8e8;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+  }
+
+  .sideNavMenuOpen .sideNavCards {
+    display: flex;
+  }
+
+  .navItemSlotGroup {
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .navItemSlotHorConn,
+  .navItemSlotConnector {
+    display: none;
+  }
+
+  .navItemSlotGroup .navItemSlot:first-child {
+    display: none;
+  }
+
+  .navItemSlotStack {
+    min-height: 0;
+    gap: 0;
+    width: 100%;
+  }
+
+  .navItemSlotBodyPlain {
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0;
+    padding: 0.75rem 0.875rem;
+    border-radius: 0.25rem;
+    background: #f0f0f0;
+  }
+
+  .navItemSlotGroupActive .navItemSlotBodyPlain {
+    width: 100% !important;
+    height: auto !important;
+    background: #1a1a1a;
+  }
+
+  .navItemSlotGroupInactive .navItemSlotBodyPlain {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .navItemSlotGroup + .navItemSlotGroup {
+    margin-top: 0.375rem;
+  }
+
+  .navItemSlotBodyLabel {
+    position: static !important;
+    right: auto;
+    top: auto !important;
+    text-align: left;
+  }
+
+  .navItemSlotGroupActive .navItemSlotBodyLabel {
+    color: #f0f0f0;
+    font-size: 0.9375rem;
+  }
+
+  .navItemSlotGroupInactive .navItemSlotBodyLabel {
+    color: #3b3b3b;
+    font-size: 0.9375rem;
+  }
+
+  .sideNavAbout {
+    left: 0;
+    right: 0;
+    bottom: 3.5rem; /* above dock strip */
+    width: 100%;
+    padding: 0;
+    height: auto;
+  }
+
+  .sideNavAboutTabRail {
+    display: none;
+  }
+
+  .sideNavAboutTab {
+    left: 0.75rem;
+  }
+
+  .sideNavAboutPanel {
+    padding: 0.75rem 1rem 0.875rem;
+    height: auto;
+  }
+
+  .sideNavAboutRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding-left: 0;
+  }
+
+  .sideNavAboutCopy {
+    width: 100%;
+    max-width: none;
+    flex: 0 0 auto;
+  }
+
+  .sideNavAboutRule {
+    width: 100%;
+  }
+
+  .sideNavAboutBody {
+    width: 100%;
+  }
+
+  /* Re-show accent under copy; half of desktop 31px height */
+  .sideNavAboutAccent {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 0.96875rem; /* 15.5px — half of 31px */
+    min-width: 0;
+  }
+
+  .sideNavIconWrap {
+    top: auto !important;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  .sideNavIconStack {
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    gap: 0;
+    pointer-events: auto;
+  }
+
+  .sideNavIconButton {
+    flex: 1 1 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    height: 3.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: 0.0625rem solid #2e2e2e;
+  }
+
+  .sideNavIconLabel {
+    position: static;
+    top: auto;
+    left: auto;
+    font-size: 0.6875rem;
+    line-height: 0.875rem;
+  }
+
+  .sideNavIconMark {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 2rem; /* 2× prior 1rem */
+    height: 2rem;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sideNavIconImage {
+    width: 1.75rem; /* 2× prior 0.875rem */
+    height: 1.75rem;
+  }
+}
+

@@ -1,0 +1,46 @@
+.button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2rem; /* 32px */
+  height: 2rem; /* 32px */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0.03125rem solid #b5b5b5; /* 0.5px */
+  background: #fff;
+  overflow: visible;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/Sidebar/rail-slider/button-texture.png");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.button:hover {
+  background: #d8d8d8;
+}
+
+.button:hover::before {
+  opacity: 0.55;
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  width: 1.125rem; /* 18px */
+  height: 1.125rem; /* 18px */
+  display: block;
+}
