@@ -208,12 +208,26 @@ export default function Sidebar({
 }: SidebarProps) {
   const [mounted, setMounted] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [aboutCollapsed, setAboutCollapsed] = useState(false)
   const sideNavRef = useRef<HTMLElement>(null)
   const aboutRailColor =
     (activeInlineDetail && ABOUT_RAIL_COLOR_BY_DETAIL[activeInlineDetail]) ||
     ABOUT_RAIL_COLOR_DEFAULT
   const activeLabel =
     SLOT_TABS.find((tab) => tab.id === activeTab)?.label ?? 'Menu'
+
+  const isDesktopViewport = () =>
+    window.matchMedia('(min-width: 1280px)').matches
+
+  const toggleAboutCollapsed = () => {
+    if (!isDesktopViewport()) return
+    setAboutCollapsed((collapsed) => !collapsed)
+  }
+
+  const collapseAbout = () => {
+    if (!isDesktopViewport()) return
+    setAboutCollapsed(true)
+  }
 
   useLayoutEffect(() => {
     setMounted(true)
@@ -269,11 +283,27 @@ export default function Sidebar({
     return () => mobileQuery.removeListener(onChange)
   }, [])
 
+  useLayoutEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 1280px)')
+    const onChange = () => {
+      if (!desktopQuery.matches) setAboutCollapsed(false)
+    }
+    onChange()
+    if (typeof desktopQuery.addEventListener === 'function') {
+      desktopQuery.addEventListener('change', onChange)
+      return () => desktopQuery.removeEventListener('change', onChange)
+    }
+    desktopQuery.addListener(onChange)
+    return () => desktopQuery.removeListener(onChange)
+  }, [])
+
   return (
     <nav
       ref={sideNavRef}
       className={
-        styles.sideNav + (menuOpen ? ` ${styles.sideNavMenuOpen}` : '')
+        styles.sideNav +
+        (menuOpen ? ` ${styles.sideNavMenuOpen}` : '') +
+        (aboutCollapsed ? ` ${styles.sideNavAboutCollapsed}` : '')
       }
       aria-label="Section menu"
     >
@@ -317,7 +347,13 @@ export default function Sidebar({
 
       <div className={styles.sideNavAbout}>
         <div className={styles.sideNavAboutTabRow}>
-          <div className={styles.sideNavAboutTab}>
+          <button
+            type="button"
+            className={styles.sideNavAboutTab}
+            aria-expanded={!aboutCollapsed}
+            aria-controls="about-panel"
+            onClick={toggleAboutCollapsed}
+          >
             <span className={styles.sideNavAboutTabLabel}>ABOUT</span>
             <svg
               className={styles.sideNavAboutTabIcon}
@@ -330,14 +366,20 @@ export default function Sidebar({
                 d="M1.5 11c0-2.485 2.015-4 4.5-4s4.5 1.515 4.5 4H1.5z"
               />
             </svg>
-          </div>
+          </button>
           <span
             className={styles.sideNavAboutTabRail}
             style={{ backgroundColor: aboutRailColor }}
             aria-hidden
           />
         </div>
-        <div className={styles.sideNavAboutPanel}>
+        <div
+          id="about-panel"
+          className={styles.sideNavAboutPanel}
+          role="region"
+          aria-label="About"
+          onClick={collapseAbout}
+        >
           <div className={styles.sideNavAboutRow}>
             <div className={styles.sideNavAboutCopy}>
               <h2 className={styles.sideNavAboutTitle}>

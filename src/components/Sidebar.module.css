@@ -96,9 +96,16 @@
   box-sizing: border-box;
   width: 8.125rem; /* 130px */
   height: 1.5rem; /* 24px */
+  margin: 0;
   padding: 0 0.5rem 0 0.5rem; /* 8px left (and right) */
+  border: none;
   background: #000;
   color: #a8a8a8;
+  font: inherit;
+  cursor: default;
+  appearance: none;
+  pointer-events: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sideNavAboutTabRail {
@@ -116,6 +123,7 @@
   mask-repeat: no-repeat;
   pointer-events: none;
   user-select: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .sideNavAboutTabLabel {
@@ -142,6 +150,47 @@
   padding: 0.875rem 0 1rem;
   background: #2c2c2e;
   color: #f0f0f0;
+  overflow: hidden;
+  transition:
+    max-height 0.28s ease,
+    opacity 0.25s ease,
+    padding 0.25s ease,
+    filter 0.2s ease;
+}
+
+/* —— Desktop only: collapsible About —— */
+@media (min-width: 1280px) {
+  .sideNavAboutTab {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .sideNavAboutTab:hover {
+    background: #2e2e2e;
+    color: #fff;
+  }
+
+  .sideNavAboutPanel {
+    /* Brightness boost so the panel reads as interactive */
+    background: #3a3a3d;
+    filter: brightness(1.12);
+    pointer-events: auto;
+    cursor: pointer;
+    max-height: 12rem;
+  }
+
+  .sideNavAboutCollapsed .sideNavAboutPanel {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+  }
+
+  .sideNavAboutCollapsed .sideNavAboutTabRail {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .sideNavAboutRow {

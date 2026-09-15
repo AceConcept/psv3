@@ -4,7 +4,7 @@ import styles from './TitleDescription.module.css'
 const DEFAULT_RIGHT_PREVIEW_LENGTH = 150
 
 export type TitleDescriptionProps = {
-  title: string
+  title?: string
   description?: string
   leftSubtitle?: string
   rightSubtitle?: string
@@ -23,21 +23,30 @@ export default function TitleDescription({
 }: TitleDescriptionProps) {
   const [rightExpanded, setRightExpanded] = useState(false)
   const hasTwoColumnSubtitles = Boolean(leftSubtitle || rightSubtitle)
+  const hasTitleRow = Boolean(title || titleAccessory)
   const rightIsExpandable =
     rightSubtitle != null &&
     rightSubtitlePreviewLength > 0 &&
     rightSubtitle.length > rightSubtitlePreviewLength
 
   return (
-    <section className={styles.titleBlock} aria-labelledby="title-desc-title">
-      <div className={styles.titleRow}>
-        <h2 id="title-desc-title" className={styles.title}>
-          {title}
-        </h2>
-        {titleAccessory ? (
-          <div className={styles.titleAccessory}>{titleAccessory}</div>
-        ) : null}
-      </div>
+    <section
+      className={styles.titleBlock}
+      aria-labelledby={title ? 'title-desc-title' : undefined}
+      aria-label={title ? undefined : 'Project details'}
+    >
+      {hasTitleRow ? (
+        <div className={styles.titleRow}>
+          {title ? (
+            <h2 id="title-desc-title" className={styles.title}>
+              {title}
+            </h2>
+          ) : null}
+          {titleAccessory ? (
+            <div className={styles.titleAccessory}>{titleAccessory}</div>
+          ) : null}
+        </div>
+      ) : null}
 
       {hasTwoColumnSubtitles ? (
         <div className={styles.subtitleRow}>

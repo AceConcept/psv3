@@ -12,14 +12,6 @@ export default function KornFerryDetail() {
         className={styles.banner}
       />
       <TitleDescription
-        title="Korn Ferry"
-        titleAccessory={
-          <img
-            src="/assets/korn-ferry/product-button.png"
-            alt="Product Design"
-            className={styles.productButton}
-          />
-        }
         leftSubtitle="Designed B2B software products for hiring processes, including AI-powered features and data visualization."
         rightSubtitle={`During my year at Korn Ferry, I designed multiple B2B software products in a fast-paced agile environment, focusing on mass and specialized hiring processes.
 

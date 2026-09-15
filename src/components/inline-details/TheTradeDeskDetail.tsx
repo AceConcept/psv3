@@ -5,7 +5,6 @@ export default function TheTradeDeskDetail() {
   return (
     <>
       <TitleDescription
-        title="theTradeDesk"
         leftSubtitle="At The Trade Desk, I built and documented a scalable design system that unified the brand's digital presence across their main web platforms."
         rightSubtitle={`The Trade Desk is a global technology company that provides a self-service demand-side platform (DSP), enabling advertisers to purchase and manage data-driven digital ad campaigns across the open internet, including video, display, and connected TV.
 

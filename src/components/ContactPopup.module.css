@@ -1,0 +1,368 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background-color: rgba(151, 151, 151, 0.45);
+  animation: contactBackdropIn 0.2s ease-out;
+}
+
+@keyframes contactBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 42rem;
+  height: 20rem;
+  max-width: calc(100vw - 3rem);
+  background-color: #fff;
+  background-image: url('/home/contact-popin/card-bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.625rem 0.875rem 0 rgba(0, 0, 0, 0.25);
+  animation: contactPanelIn 0.25s ease-out;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@keyframes contactPanelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.closeIcon {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.closeCircle {
+  fill: transparent;
+  stroke: #606060;
+  transition: fill 0.15s ease;
+}
+
+.closeX {
+  fill: #000;
+  stroke: #606060;
+  transition:
+    fill 0.15s ease,
+    stroke 0.15s ease;
+}
+
+.closeButton:hover .closeCircle {
+  fill: #606060;
+}
+
+.closeButton:hover .closeX {
+  fill: #fff;
+  stroke: #fff;
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 2.25rem 0.9375rem 0.9375rem;
+  overflow: auto;
+}
+
+.contactContent {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.contactHeader {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.3125rem;
+  width: 100%;
+}
+
+.sepGraphic {
+  display: block;
+  margin-top: 2.5rem;
+}
+
+.bookCallSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: 7.125rem;
+  width: 40.125rem;
+  max-width: 100%;
+  height: 5.625rem;
+  margin-top: 1.75rem;
+  padding: 0.9375rem;
+  border-radius: 0.5rem;
+  background: #313131;
+  overflow: hidden;
+}
+
+.bookCallLead {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.bookCallIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 3.6875rem;
+  height: 3.6875rem;
+  background: #fff;
+}
+
+.bookCallIcon {
+  display: block;
+  width: 1.625rem;
+  height: 1.625rem;
+}
+
+.bookCallText {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: 0.4375rem;
+  min-width: 0;
+}
+
+.bookCallTitle {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0;
+  color: #fff;
+  text-align: left;
+}
+
+.bookCallSubtitle {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+  color: #fff;
+  text-align: left;
+}
+
+.bookCallButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  gap: 0.625rem;
+  width: 13.0625rem;
+  height: 3.4375rem;
+  padding: 0.5rem 0.6875rem;
+  border-radius: 0.25rem;
+  background:
+    linear-gradient(180deg, #e0e0e0 28%, #cfcfcf 100%),
+    #fff;
+  font-family: var(--font-family);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0;
+  color: #000;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.bookCallButton:hover {
+  background:
+    linear-gradient(180deg, #e8e8e8 28%, #d7d7d7 100%),
+    #fff;
+}
+
+.contactDetails {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.title {
+  margin: 0;
+  flex: 0 0 auto;
+  font-family: var(--font-family);
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0;
+  color: #000;
+  text-align: left;
+}
+
+.titleLogo {
+  display: block;
+  width: 6.03125rem;
+  min-width: 6.03125rem;
+  height: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.contactRow {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.contactLabel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 4.875rem;
+  width: 4.875rem;
+  height: auto;
+  min-height: 1.5625rem;
+  padding: 0.3125rem 0.25rem;
+  background: #e5e6e3;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #666666;
+}
+
+.contactValue {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  gap: 0.625rem;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 1.5625rem;
+  height: auto;
+  padding: 0.0625rem 0.375rem;
+  border: none;
+  background: #fff;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0;
+  color: #000;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contactValueText {
+  flex: 0 1 auto;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.contactCopyIcon {
+  display: block;
+  flex: 0 0 auto;
+  width: 0.75rem;
+  height: 0.8125rem;
+}
+
+.contactValue:hover .contactValueText {
+  text-decoration: underline;
+}
+
+.copyStatus {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1200;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: #000;
+  font-family: var(--font-family);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #fff;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .panel {
+    width: 100%;
+    height: auto;
+    min-height: 18rem;
+  }
+
+  .bookCallSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+    height: auto;
+  }
+
+  .bookCallButton {
+    width: 100%;
+  }
+
+  .contactHeader {
+    flex-direction: column;
+  }
+}

@@ -6,7 +6,6 @@ export default function RogaDetail() {
   return (
     <>
       <TitleDescription
-        title="Roga"
         leftSubtitle="Roga is a banking app designed to simplify everyday money management. It removes the frustration from common banking tasks—letting you track balances, manage payments, and reach financial goals with clarity and ease."
         rightSubtitle={`Roga’s homepage is built with a modular design, giving each banking tool its own clear, flexible space. This makes it easier for users to focus on what matters—whether that’s checking their balance, tracking goals, or reviewing recent activity—without the screen feeling cluttered or overwhelming.
 

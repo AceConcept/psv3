@@ -5,7 +5,6 @@ export default function SlaiDetail() {
   return (
     <>
       <TitleDescription
-        title="Slai.io - Rebranded to Bolt.io"
         leftSubtitle="Slai makes it easy to get models into production. No server, no configuration, no headaches. The founders approached me to help give their vision more substance and get their designs out the door quickly."
         rightSubtitle={`Made initial design for the webpage, the code editor, and the dashboard. The code editor features a streamlined interface for deploying code without complications. It includes essential functionality found in standard code editors while maintaining flexibility for future enhancements and integration with the product pipeline.
 

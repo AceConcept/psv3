@@ -318,8 +318,18 @@
   text-align: left;
 }
 
+.contentTitleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.875rem; /* 14px — title to accent line */
+  width: 100%;
+  min-width: 0;
+}
+
 .contentTitle {
   margin: 0;
+  flex-shrink: 0;
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 1.25rem; /* 20px */
@@ -327,6 +337,31 @@
   letter-spacing: 0;
   text-align: left;
   color: #1a1a1a;
+}
+
+.contentTitleAccent {
+  display: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 2.375rem; /* 38px — asset native height */
+  object-fit: fill;
+  object-position: left center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.contentTitleAccessory {
+  display: block;
+  flex-shrink: 0;
+  height: 1.75rem;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .contentTitleAccent {
+    display: block;
+  }
 }
 
 .returnToList {
@@ -442,6 +477,9 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #1a1a1a #4a4a4a;
+  /* Extra bottom scroll room ≈ half a card (same as card grid) */
+  padding-bottom: calc(var(--card-h) / 2);
+  box-sizing: border-box;
 }
 
 .detailScroll::-webkit-scrollbar {

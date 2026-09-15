@@ -5,6 +5,7 @@ import Sidebar from './Sidebar'
 import ProjectCard from './ProjectCard'
 import InlineDetailView from './inline-details/InlineDetailView'
 import DetailBackButton from './detail/DetailBackButton'
+import ContactPopup from './ContactPopup'
 import {
   NAV_ITEMS,
   TAB_ITEMS,
@@ -17,8 +18,13 @@ import {
   buildSectionHash,
   parseSectionHash,
   INLINE_DETAIL_TAB,
+  INLINE_DETAIL_TITLE,
   type InlineDetailId,
 } from '../lib/inline-detail-pages'
+import {
+  buildContactHash,
+  isContactHash,
+} from '../lib/contact-hash'
 import {
   CARD_DRIFT_PX,
   CARD_ENTER_EASE,
@@ -196,6 +202,7 @@ export default function PortfolioShell() {
   const [contentMode, setContentMode] = useState<'grid' | 'detail'>('grid')
   const [activeInlineDetail, setActiveInlineDetail] =
     useState<InlineDetailId | null>(null)
+  const [contactOpen, setContactOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const detailScrollRef = useRef<HTMLDivElement>(null)
@@ -246,8 +253,31 @@ export default function PortfolioShell() {
     syncHash(tab, null, 'replace')
   }, [resetCardFeed, syncHash])
 
+  const openContact = useCallback(() => {
+    setContactOpen(true)
+    window.history.pushState(null, '', `/#${buildContactHash()}`)
+  }, [])
+
+  const closeContact = useCallback(() => {
+    setContactOpen(false)
+    const tab = activeTabRef.current
+    const detailId = activeInlineDetail
+    window.history.replaceState(
+      null,
+      '',
+      `/#${buildSectionHash(tab, detailId)}`,
+    )
+  }, [activeInlineDetail])
+
   const applyHash = useCallback(() => {
-    const { tab, detailId } = parseSectionHash(window.location.hash ?? '')
+    const hash = window.location.hash ?? ''
+    if (isContactHash(hash)) {
+      setContactOpen(true)
+      return
+    }
+    setContactOpen(false)
+
+    const { tab, detailId } = parseSectionHash(hash)
     if (!tab) return
     setActiveTab(tab)
     setTabSession((n) => n + 1)
@@ -281,6 +311,10 @@ export default function PortfolioShell() {
   }
 
   const activeNav = NAV_ITEMS.find((item) => item.id === activeTab) ?? NAV_ITEMS[0]
+  const panelTitle =
+    contentMode === 'detail' && activeInlineDetail
+      ? INLINE_DETAIL_TITLE[activeInlineDetail]
+      : activeNav.title
   const tabItems = TAB_ITEMS[activeTab]
   const visibleItems = useMemo(
     () => tabItems.slice(0, visibleCount),
@@ -370,9 +404,7 @@ export default function PortfolioShell() {
                     activeTab={activeTab}
                     onNavClick={handleNavClick}
                     activeInlineDetail={activeInlineDetail}
-                    onContactClick={() => {
-                      window.location.href = 'mailto:ace@atencium-ui.com'
-                    }}
+                    onContactClick={openContact}
                   />
                 </div>
 
@@ -412,7 +444,23 @@ export default function PortfolioShell() {
                         {contentMode === 'detail' ? (
                           <DetailBackButton onClick={closeInlineDetail} />
                         ) : null}
-                        <h1 className={styles.contentTitle}>{activeNav.title}</h1>
+                        <div className={styles.contentTitleRow}>
+                          <h1 className={styles.contentTitle}>{panelTitle}</h1>
+                          {contentMode === 'grid' ? (
+                            <img
+                              className={styles.contentTitleAccent}
+                              src="/assets/main-panel/title-line-accent.png"
+                              alt=""
+                              aria-hidden
+                            />
+                          ) : activeInlineDetail === 'korn-ferry' ? (
+                            <img
+                              className={styles.contentTitleAccessory}
+                              src="/assets/korn-ferry/product-button.png"
+                              alt="Product Design"
+                            />
+                          ) : null}
+                        </div>
                       </div>
                     </motion.div>
                   </AnimatePresence>
@@ -549,6 +597,9 @@ export default function PortfolioShell() {
         </div>
       </div>
       {overlayEl}
+      {contactOpen && mounted
+        ? createPortal(<ContactPopup onClose={closeContact} />, document.body)
+        : null}
     </section>
   )
 }

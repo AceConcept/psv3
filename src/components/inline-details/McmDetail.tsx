@@ -5,7 +5,6 @@ export default function McmDetail() {
   return (
     <>
       <TitleDescription
-        title="MCM"
         leftSubtitle="Shopping cart redesign for MCM International, a luxury fashion brand from Munich, known for its iconic backpacks and accessories."
         rightSubtitle={`While working at the First Principle design agency, MCM approached us with the task of redesigning their cart flow. I was put in-charge of this project to build a new checkout system utilizing the best industry standards of the time.
 

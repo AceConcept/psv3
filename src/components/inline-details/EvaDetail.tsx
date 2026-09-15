@@ -6,7 +6,6 @@ export default function EvaDetail() {
   return (
     <>
       <TitleDescription
-        title="Eva"
         leftSubtitle="Project Eva is a specialized framework designed to streamline how complex systems are built, deployed, and maintained."
         rightSubtitle={`The Marketing team is about to launch a major holiday promotional email blast, and Sarah needs to scale up the primary user-facing application, the API-Users service, to handle a huge surge in traffic. Specifically, she needs to increase the maximum number of instances (replicas) the service can run from 16 to 32.
 

@@ -22,6 +22,18 @@ export const INLINE_DETAIL_TAB: Record<InlineDetailId, SectionTab> = {
   'the-trade-desk': 'design',
 }
 
+/** Display title for the main panel header on detail pages */
+export const INLINE_DETAIL_TITLE: Record<InlineDetailId, string> = {
+  eva: 'Eva',
+  roga: 'Roga',
+  'korn-ferry': 'Korn Ferry',
+  'arena-physica': 'Arena Physica',
+  mcm: 'MCM',
+  novo: 'Novo',
+  slai: 'Slai.io - Rebranded to Bolt.io',
+  'the-trade-desk': 'theTradeDesk',
+}
+
 const INLINE_DETAIL_IDS = new Set<string>(Object.keys(INLINE_DETAIL_TAB))
 
 export function isInlineDetailId(id: string): id is InlineDetailId {
