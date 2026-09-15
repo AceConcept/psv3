@@ -377,7 +377,7 @@
   flex: 1 1 0;
   min-height: 0;
   width: 100%;
-  max-height: 44.6875rem; /* 715px */
+  max-height: 47.5rem; /* 760px */
   overflow: visible;
 }
 
@@ -389,6 +389,8 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #1a1a1a #4a4a4a; /* thumb track */
+  /* Extra bottom scroll room ≈ half a card */
+  padding-bottom: calc(var(--card-h) / 2);
 }
 
 .cardGridScroll::-webkit-scrollbar {
