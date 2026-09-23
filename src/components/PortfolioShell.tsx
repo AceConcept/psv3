@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { PointerEvent as ReactPointerEvent, RefObject } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import Sidebar from './Sidebar'
@@ -46,6 +47,140 @@ const RAIL_SLIDE_ITEMS = galleryItems
   .slice(0, RAIL_SLIDE_COUNT)
 
 const WAYPOINT_SLIDE_TITLES = new Set(waypointItems.map((item) => item.title))
+
+/** Custom square scrollbar — native bar stays fully hidden. */
+function ScrollRail({
+  scrollRef,
+}: {
+  scrollRef: RefObject<HTMLDivElement | null>
+}) {
+  const thumbRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef<{ pointerId: number; startY: number; startTop: number } | null>(
+    null,
+  )
+
+  const metrics = useCallback(() => {
+    const el = scrollRef.current
+    const track = trackRef.current
+    if (!el || !track) return null
+    const { scrollTop, scrollHeight, clientHeight } = el
+    const trackH = track.clientHeight
+    if (scrollHeight <= clientHeight + 1 || trackH <= 0) return null
+    const thumbH = Math.max(24, (clientHeight / scrollHeight) * trackH)
+    const maxTop = Math.max(0, trackH - thumbH)
+    const top =
+      maxTop === 0
+        ? 0
+        : (scrollTop / (scrollHeight - clientHeight)) * maxTop
+    return { scrollTop, scrollHeight, clientHeight, thumbH, maxTop, top }
+  }, [scrollRef])
+
+  const update = useCallback(() => {
+    const thumb = thumbRef.current
+    const track = trackRef.current
+    if (!thumb || !track) return
+    const m = metrics()
+    if (!m) {
+      track.hidden = true
+      return
+    }
+    track.hidden = false
+    thumb.style.height = `${m.thumbH}px`
+    thumb.style.transform = `translateY(${m.top}px)`
+  }, [metrics])
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    if (el.firstElementChild) ro.observe(el.firstElementChild)
+    return () => {
+      el.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [scrollRef, update])
+
+  const scrollFromThumbTop = useCallback(
+    (thumbTop: number) => {
+      const el = scrollRef.current
+      const m = metrics()
+      if (!el || !m || m.maxTop <= 0) return
+      const ratio = Math.min(1, Math.max(0, thumbTop / m.maxTop))
+      el.scrollTop = ratio * (m.scrollHeight - m.clientHeight)
+    },
+    [metrics, scrollRef],
+  )
+
+  const onThumbPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const thumb = thumbRef.current
+    if (!thumb) return
+    e.preventDefault()
+    e.stopPropagation()
+    const m = metrics()
+    if (!m) return
+    thumb.setPointerCapture(e.pointerId)
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startY: e.clientY,
+      startTop: m.top,
+    }
+  }
+
+  const onThumbPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current
+    if (!drag || drag.pointerId !== e.pointerId) return
+    const m = metrics()
+    if (!m) return
+    const nextTop = Math.min(
+      m.maxTop,
+      Math.max(0, drag.startTop + (e.clientY - drag.startY)),
+    )
+    scrollFromThumbTop(nextTop)
+  }
+
+  const onThumbPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current
+    if (!drag || drag.pointerId !== e.pointerId) return
+    dragRef.current = null
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {
+      /* already released */
+    }
+  }
+
+  const onTrackPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.target !== trackRef.current) return
+    const m = metrics()
+    const track = trackRef.current
+    if (!m || !track) return
+    const rect = track.getBoundingClientRect()
+    const y = e.clientY - rect.top - m.thumbH / 2
+    scrollFromThumbTop(Math.min(m.maxTop, Math.max(0, y)))
+  }
+
+  return (
+    <div
+      ref={trackRef}
+      className={styles.scrollRail}
+      aria-hidden
+      onPointerDown={onTrackPointerDown}
+    >
+      <div
+        ref={thumbRef}
+        className={styles.scrollRailThumb}
+        onPointerDown={onThumbPointerDown}
+        onPointerMove={onThumbPointerMove}
+        onPointerUp={onThumbPointerUp}
+        onPointerCancel={onThumbPointerUp}
+      />
+    </div>
+  )
+}
 
 type RailPatternSliderProps = {
   onOpenDetail: (id: InlineDetailId) => void
@@ -396,7 +531,7 @@ export default function PortfolioShell() {
       <div className={styles.pageFrame}>
         <div className={styles.artboard}>
           <div className={styles.contentLeft} aria-hidden />
-          <div className={styles.contentArea}>
+          <div className={styles.contentArea} data-content-area>
             <div className={styles.contentReveal}>
               <div className={styles.mainLayout}>
                 <div className={styles.sideColumn}>
@@ -544,13 +679,13 @@ export default function PortfolioShell() {
                               />
                             ) : null}
                           </div>
+                          <ScrollRail scrollRef={scrollRef} />
                         </motion.div>
                       ) : (
                         activeInlineDetail && (
                           <motion.div
-                            key={`detail-${activeInlineDetail}-${tabSession}`}
-                            ref={detailScrollRef}
-                            className={styles.detailScroll}
+                            key={`detail-shell-${activeInlineDetail}-${tabSession}`}
+                            className={styles.detailScrollShell}
                             initial={{ opacity: 0, x: -CARD_DRIFT_PX }}
                             animate={{
                               opacity: 1,
@@ -581,9 +716,15 @@ export default function PortfolioShell() {
                               },
                             }}
                           >
-                            <div className={styles.detailPanel}>
-                              <InlineDetailView id={activeInlineDetail} />
+                            <div
+                              ref={detailScrollRef}
+                              className={styles.detailScroll}
+                            >
+                              <div className={styles.detailPanel}>
+                                <InlineDetailView id={activeInlineDetail} />
+                              </div>
                             </div>
+                            <ScrollRail scrollRef={detailScrollRef} />
                           </motion.div>
                         )
                       )}

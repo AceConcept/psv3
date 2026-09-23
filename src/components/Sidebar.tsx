@@ -240,11 +240,30 @@ export default function Sidebar({
     const syncRailOrigin = () => {
       const left = el.getBoundingClientRect().left
       el.style.setProperty('--slot-rail-origin', `${Math.max(0, left)}px`)
+
+      /* Keep About bar inside the 1920 artboard, not the viewport letterbox */
+      const contentArea = document.querySelector('[data-content-area]')
+      if (contentArea) {
+        const rightInset = Math.max(
+          0,
+          window.innerWidth - contentArea.getBoundingClientRect().right,
+        )
+        el.style.setProperty('--about-right-inset', `${rightInset}px`)
+      } else {
+        el.style.setProperty('--about-right-inset', '0px')
+      }
     }
 
     syncRailOrigin()
     window.addEventListener('resize', syncRailOrigin)
-    return () => window.removeEventListener('resize', syncRailOrigin)
+    const ro = new ResizeObserver(syncRailOrigin)
+    ro.observe(el)
+    const contentArea = document.querySelector('[data-content-area]')
+    if (contentArea) ro.observe(contentArea)
+    return () => {
+      window.removeEventListener('resize', syncRailOrigin)
+      ro.disconnect()
+    }
   }, [])
 
   useLayoutEffect(() => {

@@ -68,12 +68,14 @@
 
 .sideNavAbout {
   position: fixed;
-  left: var(--slot-rail-origin);
+  /* Match .sideNavCards horizontal inset from .sideNav */
+  left: calc(var(--slot-rail-origin) + 0.4375rem); /* 7px */
+  /* End at artboard content edge — not the viewport letterbox */
+  right: var(--about-right-inset, 0px);
   bottom: 1.5rem; /* was 2.5rem; +16px down */
   z-index: 50;
-  /* Fill from sidebar left to the right edge of the viewport */
-  width: calc(100vw - var(--slot-rail-origin));
-  padding-left: 1.5rem; /* 24px */
+  width: auto;
+  padding-left: 0;
   box-sizing: border-box;
   pointer-events: none;
 }
@@ -763,7 +765,8 @@
   }
 
   .sideNavAbout {
-    padding-left: 1rem;
+    left: calc(var(--slot-rail-origin) + 0.25rem); /* match tablet .sideNavCards */
+    padding-left: 0;
     padding-right: 5rem;
     bottom: 1rem;
   }
