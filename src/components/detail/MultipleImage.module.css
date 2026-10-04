@@ -36,6 +36,11 @@
   object-fit: contain;
 }
 
+.frameFixed .media {
+  height: 100%;
+  object-fit: cover;
+}
+
 .overlayBackdrop {
   position: fixed;
   inset: 0;

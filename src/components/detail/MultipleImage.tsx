@@ -12,12 +12,19 @@ export type ImageItem = {
 export type MultipleImageProps = {
   images: ImageItem[]
   enableOverlay?: boolean
+  /** Locks every tile to this ratio (e.g. '1920 / 1080') and crops to fill */
+  aspectRatio?: string
 }
 
 export default function MultipleImage({
   images,
   enableOverlay = false,
+  aspectRatio,
 }: MultipleImageProps) {
+  const frameClass = aspectRatio
+    ? `${styles.frame} ${styles.frameFixed}`
+    : styles.frame
+  const frameStyle = aspectRatio ? { aspectRatio } : undefined
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
 
@@ -90,7 +97,7 @@ export default function MultipleImage({
                 onClick={() => setOpenIndex(i)}
                 aria-label={`Open image: ${img.alt}`}
               >
-                <div className={styles.frame}>
+                <div className={frameClass} style={frameStyle}>
                   {img.mediaType === 'video' ? (
                     <video
                       className={styles.media}
@@ -112,7 +119,7 @@ export default function MultipleImage({
                 </div>
               </button>
             ) : (
-              <div className={styles.frame}>
+              <div className={frameClass} style={frameStyle}>
                 {img.mediaType === 'video' ? (
                   <video
                     className={styles.media}

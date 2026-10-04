@@ -582,10 +582,8 @@ export default function PortfolioShell() {
                         <div className={styles.contentTitleRow}>
                           <h1 className={styles.contentTitle}>{panelTitle}</h1>
                           {contentMode === 'grid' ? (
-                            <img
+                            <span
                               className={styles.contentTitleAccent}
-                              src="/assets/main-panel/title-line-accent.png"
-                              alt=""
                               aria-hidden
                             />
                           ) : activeInlineDetail === 'korn-ferry' ? (

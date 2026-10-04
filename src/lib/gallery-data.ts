@@ -25,6 +25,12 @@ const NODE_MENU_CARD: GalleryCardItem = {
 
 export const galleryItems: GalleryCardItem[] = [
   {
+    title: 'Eva',
+    meta: 'Config Management',
+    image: '/Work/EVA/%E5%9F%BA%E6%9C%AC.png',
+    detailId: 'eva',
+  },
+  {
     title: 'Waypoint Origin',
     meta: 'Live implementation flows',
     image: '/Gallery/waypoint-manager/wp-origin.png',
@@ -77,14 +83,6 @@ export const galleryItems: GalleryCardItem[] = [
     title: 'DB Performance Metrics',
     meta: 'Databases',
     image: '/Gallery/design-add/Database%20Screen.png',
-  },
-  {
-    title: 'Eva',
-    meta: 'Config Management',
-    image: '/Gallery/Eva/Eva.mp4',
-    video: '/Gallery/Eva/Eva.mp4',
-    thumbnailVideo: '/Gallery/Eva/Eva_small.mp4',
-    detailId: 'eva',
   },
   { title: 'Roga', meta: 'Finance', image: '/Gallery/Roga.png', detailId: 'roga' },
   {
