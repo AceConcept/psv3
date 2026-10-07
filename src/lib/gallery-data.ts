@@ -172,14 +172,22 @@ export const waypointItems: GalleryCardItem[] = [
 ]
 
 export const developmentItems: GalleryCardItem[] = [
-  NODE_MENU_CARD,
   {
-    title: 'Valentia',
-    meta: 'Crypto Concept',
-    image: '/Gallery/Valentia/Valentia2.png',
-    href: 'https://valentia-waypoint-v2.guildconcept.workers.dev/#2',
+    title: 'Waypoint Origin',
+    meta: 'Live implementation flows',
+    image: '/Gallery/waypoint-manager/wp-origin.png',
+    href: 'https://wp-origin.guildconcept.workers.dev/steps-waypoint#1',
     openInNewTab: false,
   },
+  NODE_MENU_CARD,
+  // Temporarily hidden.
+  // {
+  //   title: 'Valentia',
+  //   meta: 'Crypto Concept',
+  //   image: '/Gallery/Valentia/Valentia2.png',
+  //   href: 'https://valentia-waypoint-v2.guildconcept.workers.dev/#2',
+  //   openInNewTab: false,
+  // },
   {
     title: 'Luna',
     meta: 'Code Editor',
@@ -194,13 +202,6 @@ export const developmentItems: GalleryCardItem[] = [
     meta: ' Cyber Security',
     image: '/Gallery/polar-systems/polar-systems-new-1.png',
     href: 'https://wp-origin.guildconcept.workers.dev/polar-systems#1',
-  },
-  {
-    title: 'Waypoint Origin',
-    meta: 'Live implementation flows',
-    image: '/Gallery/waypoint-manager/wp-origin.png',
-    href: 'https://wp-origin.guildconcept.workers.dev/steps-waypoint#1',
-    openInNewTab: false,
   },
   {
     title: 'LuminosJP',

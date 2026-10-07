@@ -341,9 +341,10 @@
 
 .contentTitleAccent {
   display: none;
-  flex: 1 1 auto;
-  min-width: 0;
-  height: 2.375rem; /* 38px */
+  flex-shrink: 0;
+  width: 3rem; /* 48px */
+  height: 3rem; /* 48px */
+  margin-left: 0.625rem; /* + 14px row gap = 24px from title */
   background: #000;
   pointer-events: none;
   user-select: none;
@@ -352,7 +353,7 @@
 .contentTitleAccessory {
   display: block;
   flex-shrink: 0;
-  height: 1.75rem;
+  height: 0.8125rem; /* 13px */
   width: auto;
   object-fit: contain;
 }

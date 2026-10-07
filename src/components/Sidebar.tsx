@@ -36,10 +36,10 @@ const SIDE_NAV_ICONS = [
 ] as const
 
 const SLOT_TABS: { id: SectionTab; label: string; hash: string }[] = [
-  { id: 'gallery', label: 'Designs', hash: 'gallery' },
+  { id: 'gallery', label: 'Design Gallery', hash: 'gallery' },
   { id: 'waypoint', label: 'Waypoints', hash: 'waypoint' },
-  { id: 'development', label: 'Development', hash: 'development' },
   { id: 'design', label: 'Past Work', hash: 'design' },
+  { id: 'development', label: 'Development', hash: 'development' },
 ]
 
 type SidebarProps = {

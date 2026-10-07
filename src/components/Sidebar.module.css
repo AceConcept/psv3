@@ -564,7 +564,7 @@
   width: 0.5rem; /* 8px */
   flex-shrink: 0;
   object-fit: fill;
-  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotHorConn {
@@ -595,7 +595,7 @@
   width: 1.5625rem; /* 25px */
   flex-shrink: 0;
   object-fit: fill;
-  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotConnector {
@@ -613,9 +613,9 @@
   border-top-right-radius: 0.1875rem; /* 3px */
   overflow: hidden;
   transition:
-    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotBodyWrap {
@@ -634,7 +634,7 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotBody {
@@ -652,7 +652,7 @@
   width: 0.75rem; /* 12px */
   height: 0.75rem; /* 12px */
   pointer-events: none;
-  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: top 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotChip {
@@ -669,9 +669,9 @@
   flex-shrink: 0;
   border-bottom-right-radius: 0.1875rem; /* 3px */
   transition:
-    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotBodyPlain {
@@ -696,9 +696,9 @@
   white-space: nowrap;
   pointer-events: none;
   transition:
-    top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    top 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navItemSlotGroupActive .navItemSlotBodyLabel {
