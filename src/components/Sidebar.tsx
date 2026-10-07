@@ -226,6 +226,7 @@ export default function Sidebar({
 
   const collapseAbout = () => {
     if (!isDesktopViewport()) return
+    if (window.getSelection()?.isCollapsed === false) return
     setAboutCollapsed(true)
   }
 

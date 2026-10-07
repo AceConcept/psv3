@@ -68,13 +68,6 @@ export const galleryItems: GalleryCardItem[] = [
     href: 'https://wp-origin.guildconcept.workers.dev/polar-systems#1',
   },
   {
-    title: 'Valentia',
-    meta: 'Crypto Concept',
-    image: '/Gallery/Valentia/Valentia2.png',
-    href: 'https://valentia-waypoint-v2.guildconcept.workers.dev/#2',
-    openInNewTab: false,
-  },
-  {
     title: 'Social Media Analytics',
     meta: 'Analytics',
     image: '/Gallery/design-add/wave%202/Marketing.png',
@@ -90,13 +83,20 @@ export const galleryItems: GalleryCardItem[] = [
     meta: 'Analytics',
     image: '/Gallery/design-add/wave%202/Performance%20Graphs.png',
   },
-  { title: 'Code Editor', meta: 'Software Dev', image: '/Gallery/code-editor.jpeg' },
   {
     title: 'Balance Chart',
     meta: 'Animation',
     image: '/Gallery/balance-chart.mp4',
     video: '/Gallery/balance-chart.mp4',
     thumbnailVideo: '/Gallery/balance-chart_small.mp4',
+  },
+  { title: 'Code Editor', meta: 'Software Dev', image: '/Gallery/code-editor.jpeg' },
+  {
+    title: 'Luna Proto',
+    meta: 'Prototype',
+    image: '/Gallery/luna_small.mp4',
+    video: '/Gallery/luna_small.mp4',
+    thumbnailVideo: '/Gallery/luna_small.mp4',
   },
 ]
 

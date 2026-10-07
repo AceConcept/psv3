@@ -37,14 +37,14 @@ import {
 import styles from './PortfolioShell.module.css'
 
 const CARD_BATCH_SIZE = CARDS_PER_ROW * 4
-const RAIL_SLIDE_COUNT = 5
 const RAIL_SLIDE_HEIGHT_REM = 4.9375 /* 79px */
 const RAIL_SLIDE_GAP_REM = 0.625 /* 10px */
 const RAIL_SLIDE_STEP_REM = RAIL_SLIDE_HEIGHT_REM + RAIL_SLIDE_GAP_REM
+const RAIL_AUTOPLAY_MS = 3000
 
-const RAIL_SLIDE_ITEMS = galleryItems
-  .filter((item) => !item.video && !item.image.endsWith('.mp4'))
-  .slice(0, RAIL_SLIDE_COUNT)
+const RAIL_SLIDE_ITEMS = galleryItems.filter(
+  (item) => !item.video && !item.image.endsWith('.mp4'),
+)
 
 const WAYPOINT_SLIDE_TITLES = new Set(waypointItems.map((item) => item.title))
 
@@ -193,15 +193,15 @@ function RailPatternSlider({
   onOpenMedia,
   onGoToWaypoint,
 }: RailPatternSliderProps) {
-  const [index, setIndex] = useState(0)
-  const [instant, setInstant] = useState(false)
-  const [preferReducedMotion, setPreferReducedMotion] = useState(false)
   const slideCount = RAIL_SLIDE_ITEMS.length
-  /* Full copy already in the track so 1–5 is always waiting after 1–5 */
+  /* Track holds three copies; index stays in the middle copy between moves */
+  const [index, setIndex] = useState(slideCount)
+  const [instant, setInstant] = useState(false)
+  const [paused, setPaused] = useState(false)
+  const [preferReducedMotion, setPreferReducedMotion] = useState(false)
   const trackItems = useMemo(
-    () =>
-      slideCount === 0 ? [] : [...RAIL_SLIDE_ITEMS, ...RAIL_SLIDE_ITEMS],
-    [slideCount],
+    () => [...RAIL_SLIDE_ITEMS, ...RAIL_SLIDE_ITEMS, ...RAIL_SLIDE_ITEMS],
+    [],
   )
 
   useEffect(() => {
@@ -215,26 +215,20 @@ function RailPatternSlider({
   const goNext = useCallback(() => {
     if (slideCount === 0) return
     setInstant(false)
-    setIndex((current) => current + 1)
+    setIndex((current) => Math.min(current + 1, slideCount * 3 - 1))
   }, [slideCount])
 
   const goPrev = useCallback(() => {
     if (slideCount === 0) return
-    if (index > 0) {
-      setInstant(false)
-      setIndex(index - 1)
-      return
-    }
-    /* At start: jump to duplicate copy, then step back one */
-    setInstant(true)
-    setIndex(slideCount)
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setInstant(false)
-        setIndex(slideCount - 1)
-      })
-    })
-  }, [index, slideCount])
+    setInstant(false)
+    setIndex((current) => Math.max(current - 1, 0))
+  }, [slideCount])
+
+  useEffect(() => {
+    if (paused || preferReducedMotion || slideCount < 2) return
+    const id = window.setTimeout(goNext, RAIL_AUTOPLAY_MS)
+    return () => window.clearTimeout(id)
+  }, [index, paused, preferReducedMotion, slideCount, goNext])
 
   const openItem = useCallback(
     (item: GalleryCardItem) => {
@@ -262,7 +256,11 @@ function RailPatternSlider({
   )
 
   return (
-    <div className={styles.railSlider}>
+    <div
+      className={styles.railSlider}
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+    >
       <button
         type="button"
         className={`${styles.railSliderRing} ${styles.railSliderRingUp}`}
@@ -292,6 +290,7 @@ function RailPatternSlider({
       <div className={styles.railSliderViewport}>
         <motion.div
           className={styles.railSliderTrack}
+          initial={false}
           animate={{ y: `${-index * RAIL_SLIDE_STEP_REM}rem` }}
           transition={
             preferReducedMotion || instant
@@ -299,10 +298,14 @@ function RailPatternSlider({
               : { duration: 0.55, ease: [0.4, 0, 0.2, 1] }
           }
           onAnimationComplete={() => {
-            /* Landed on the duplicate set — jump back to the real start */
-            if (index < slideCount) return
-            setInstant(true)
-            setIndex(0)
+            /* Drifted into an outer copy — re-center on the identical middle slide */
+            if (index >= slideCount * 2) {
+              setInstant(true)
+              setIndex(index - slideCount)
+            } else if (index < slideCount) {
+              setInstant(true)
+              setIndex(index + slideCount)
+            }
           }}
         >
           {trackItems.map((item, i) => (
@@ -341,7 +344,8 @@ export default function PortfolioShell() {
   const [mounted, setMounted] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const detailScrollRef = useRef<HTMLDivElement>(null)
-  const sentinelRef = useRef<HTMLDivElement>(null)
+  /* State (not a ref) so the observer re-attaches when the grid mounts after a tab swap */
+  const [sentinel, setSentinel] = useState<HTMLDivElement | null>(null)
   const activeTabRef = useRef(activeTab)
   activeTabRef.current = activeTab
 
@@ -460,7 +464,6 @@ export default function PortfolioShell() {
   useEffect(() => {
     if (contentMode !== 'grid') return
     const root = scrollRef.current
-    const sentinel = sentinelRef.current
     if (!root || !sentinel || !hasMore) return
 
     const observer = new IntersectionObserver(
@@ -475,7 +478,7 @@ export default function PortfolioShell() {
 
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [hasMore, tabItems.length, activeTab, tabSession, visibleCount, contentMode])
+  }, [sentinel, hasMore, tabItems.length, activeTab, tabSession, visibleCount, contentMode])
 
   useEffect(() => {
     if (contentMode !== 'detail') return
@@ -671,7 +674,7 @@ export default function PortfolioShell() {
                             </div>
                             {hasMore ? (
                               <div
-                                ref={sentinelRef}
+                                ref={setSentinel}
                                 className={styles.cardGridSentinel}
                                 aria-hidden
                               />
