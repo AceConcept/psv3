@@ -342,9 +342,9 @@
 .contentTitleAccent {
   display: none;
   flex-shrink: 0;
-  width: 3rem; /* 48px */
-  height: 3rem; /* 48px */
-  margin-left: 0.625rem; /* + 14px row gap = 24px from title */
+  width: 0.75rem; /* 12px */
+  height: 0.75rem; /* 12px */
+  margin-left: -0.125rem; /* + 14px row gap = 12px from title */
   background: #000;
   pointer-events: none;
   user-select: none;
