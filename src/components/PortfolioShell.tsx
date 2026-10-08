@@ -6,6 +6,7 @@ import Sidebar from './Sidebar'
 import ProjectCard from './ProjectCard'
 import InlineDetailView from './inline-details/InlineDetailView'
 import DetailBackButton from './detail/DetailBackButton'
+import MediaOverlay from './detail/MediaOverlay'
 import ContactPopup from './ContactPopup'
 import {
   NAV_ITEMS,
@@ -47,6 +48,9 @@ const RAIL_SLIDE_ITEMS = galleryItems.filter(
 )
 
 const WAYPOINT_SLIDE_TITLES = new Set(waypointItems.map((item) => item.title))
+const WAYPOINT_ORIGIN_HREF = waypointItems.find(
+  (item) => item.title === 'Waypoint Origin',
+)?.href
 
 /** Custom square scrollbar — native bar stays fully hidden. */
 function ScrollRail({
@@ -460,6 +464,7 @@ export default function PortfolioShell() {
     [tabItems, visibleCount],
   )
   const hasMore = visibleCount < tabItems.length
+  const showWaypointIntro = contentMode === 'grid' && activeTab === 'waypoint'
 
   useEffect(() => {
     if (contentMode !== 'grid') return
@@ -490,44 +495,14 @@ export default function PortfolioShell() {
   }, [contentMode, closeInlineDetail])
 
   const overlayEl =
-    openProject && mounted
-      ? createPortal(
-          <div
-            className={styles.overlayBackdrop}
-            onClick={() => setOpenProject(null)}
-            role="button"
-            tabIndex={0}
-            aria-label="Close overlay"
-            onKeyDown={(e) => e.key === 'Escape' && setOpenProject(null)}
-          >
-            <div
-              className={styles.overlayContent}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className={styles.overlayInner}>
-                {openProject.video ? (
-                  <video
-                    className={styles.overlayVideo}
-                    src={openProject.video}
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                    controls
-                  />
-                ) : (
-                  <img
-                    src={openProject.image}
-                    alt=""
-                    className={styles.overlayImage}
-                  />
-                )}
-              </div>
-            </div>
-          </div>,
-          document.body,
-        )
-      : null
+    openProject && mounted ? (
+      <MediaOverlay
+        src={openProject.video ?? openProject.image}
+        alt={openProject.title}
+        mediaType={openProject.video ? 'video' : 'image'}
+        onClose={() => setOpenProject(null)}
+      />
+    ) : null
 
   return (
     <section className={styles.section}>
@@ -582,19 +557,39 @@ export default function PortfolioShell() {
                         {contentMode === 'detail' ? (
                           <DetailBackButton onClick={closeInlineDetail} />
                         ) : null}
-                        <div className={styles.contentTitleRow}>
-                          <h1 className={styles.contentTitle}>{panelTitle}</h1>
-                          {contentMode === 'grid' ? (
-                            <span
-                              className={styles.contentTitleAccent}
-                              aria-hidden
-                            />
-                          ) : activeInlineDetail === 'korn-ferry' ? (
-                            <img
-                              className={styles.contentTitleAccessory}
-                              src="/assets/korn-ferry/product-button.png"
-                              alt="Product Design"
-                            />
+                        <div className={styles.contentIntroRow}>
+                          <div className={styles.contentIntro}>
+                            <div className={styles.contentTitleRow}>
+                              <h1 className={styles.contentTitle}>
+                                {panelTitle}
+                              </h1>
+                              {contentMode === 'grid' ? (
+                                <span
+                                  className={styles.contentTitleAccent}
+                                  aria-hidden
+                                />
+                              ) : activeInlineDetail === 'korn-ferry' ? (
+                                <img
+                                  className={styles.contentTitleAccessory}
+                                  src="/assets/korn-ferry/product-button.png"
+                                  alt="Product Design"
+                                />
+                              ) : null}
+                            </div>
+                            {showWaypointIntro ? (
+                              <p className={styles.contentDescription}>
+                                Live implementation flows of designs I’ve made
+                                with guided interactions.
+                              </p>
+                            ) : null}
+                          </div>
+                          {showWaypointIntro && WAYPOINT_ORIGIN_HREF ? (
+                            <a
+                              href={WAYPOINT_ORIGIN_HREF}
+                              className={styles.useWaypointButton}
+                            >
+                              Use Waypoint
+                            </a>
                           ) : null}
                         </div>
                       </div>

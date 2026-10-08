@@ -17,6 +17,7 @@ She confirms the change, and Eva deploys it to live infrastructure with a succes
         src="/Work/EVA/edit006.mp4"
         alt="Eva edit flow"
         mediaType="video"
+        enableOverlay
       />
       <MultipleImage
         enableOverlay

@@ -4,6 +4,15 @@
   width: 100%;
 }
 
+.button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
 .frame {
   position: relative;
   display: block;

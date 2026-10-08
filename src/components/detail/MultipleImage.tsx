@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { createPortal } from 'react-dom'
+import MediaOverlay from './MediaOverlay'
 import styles from './MultipleImage.module.css'
 
 export type ImageItem = {
@@ -30,60 +30,20 @@ export default function MultipleImage({
 
   useEffect(() => setMounted(true), [])
 
-  useEffect(() => {
-    if (!enableOverlay || openIndex == null) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpenIndex(null)
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [enableOverlay, openIndex])
-
   const openImage = useMemo(() => {
     if (openIndex == null) return null
     return images[openIndex] ?? null
   }, [images, openIndex])
 
   const overlayEl =
-    enableOverlay && openImage && mounted
-      ? createPortal(
-          <div
-            className={styles.overlayBackdrop}
-            role="button"
-            tabIndex={0}
-            aria-label="Close image overlay"
-            onClick={() => setOpenIndex(null)}
-            onKeyDown={(e) => e.key === 'Escape' && setOpenIndex(null)}
-          >
-            <div
-              className={styles.overlayContent}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className={styles.overlayInner}>
-                {openImage.mediaType === 'video' ? (
-                  <video
-                    className={styles.overlayMedia}
-                    src={openImage.src}
-                    aria-label={openImage.alt}
-                    playsInline
-                    muted
-                    loop
-                    autoPlay
-                    controls
-                  />
-                ) : (
-                  <img
-                    src={openImage.src}
-                    alt={openImage.alt}
-                    className={styles.overlayMedia}
-                  />
-                )}
-              </div>
-            </div>
-          </div>,
-          document.body,
-        )
-      : null
+    enableOverlay && openImage && mounted ? (
+      <MediaOverlay
+        src={openImage.src}
+        alt={openImage.alt}
+        mediaType={openImage.mediaType}
+        onClose={() => setOpenIndex(null)}
+      />
+    ) : null
 
   return (
     <>

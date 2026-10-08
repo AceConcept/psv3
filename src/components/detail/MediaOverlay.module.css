@@ -1,0 +1,20 @@
+.overlayBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+}
+
+/* Largest box with the media's own ratio that fits in 96vw × 94vh (upscales small assets) */
+.overlayMedia {
+  display: block;
+  aspect-ratio: var(--media-ratio);
+  width: min(96vw, calc(94vh * var(--media-ratio)));
+  height: auto;
+  object-fit: contain;
+  cursor: default;
+}

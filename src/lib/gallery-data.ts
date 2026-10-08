@@ -18,7 +18,7 @@ export type SectionTab = 'gallery' | 'waypoint' | 'development' | 'design'
 const NODE_MENU_CARD: GalleryCardItem = {
   title: 'Node Menu',
   meta: 'Node Based Integration Flow',
-  image: '/Gallery/node-menu/Port-card.png',
+  image: '/assets/main-panel/node-card.png',
   href: 'https://wp-origin.guildconcept.workers.dev/node-menu#1',
   openInNewTab: false,
 }
