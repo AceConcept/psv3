@@ -14,9 +14,8 @@ She checks the current setting (4 / 16, api-v3.0.12), selects the API-Users row,
 She confirms the change, and Eva deploys it to live infrastructure with a success message.`}
       />
       <SingleImage
-        src="/Work/EVA/edit006.mp4"
-        alt="Eva edit flow"
-        mediaType="video"
+        src="/Work/EVA/even-01.png"
+        alt="EVEN overview"
         enableOverlay
       />
       <MultipleImage
@@ -24,16 +23,20 @@ She confirms the change, and Eva deploys it to live infrastructure with a succes
         aspectRatio="1920 / 1080"
         images={[
           {
-            src: '/Work/EVA/%E5%9F%BA%E6%9C%AC.png',
-            alt: 'Eva cluster overview',
+            src: '/Work/EVA/even-01.png',
+            alt: 'EVEN overview',
           },
           {
-            src: '/Work/EVA/Zoom.png',
-            alt: 'Eva inline replica edit',
+            src: '/Work/EVA/even-02.png',
+            alt: 'EVEN detail view',
           },
           {
-            src: '/Work/EVA/pop-in.png',
-            alt: 'Eva edit confirmation panel',
+            src: '/Work/EVA/even-03.png',
+            alt: 'EVEN interface',
+          },
+          {
+            src: '/Work/EVA/even-04.png',
+            alt: 'EVEN confirmation',
           },
         ]}
       />

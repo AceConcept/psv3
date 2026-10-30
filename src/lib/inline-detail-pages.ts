@@ -24,7 +24,7 @@ export const INLINE_DETAIL_TAB: Record<InlineDetailId, SectionTab> = {
 
 /** Display title for the main panel header on detail pages */
 export const INLINE_DETAIL_TITLE: Record<InlineDetailId, string> = {
-  eva: 'Eva',
+  eva: 'EVEN',
   roga: 'Roga',
   'korn-ferry': 'Korn Ferry',
   'arena-physica': 'Arena Physica',

@@ -25,9 +25,9 @@ const NODE_MENU_CARD: GalleryCardItem = {
 
 export const galleryItems: GalleryCardItem[] = [
   {
-    title: 'Eva',
+    title: 'EVEN',
     meta: 'Config Management',
-    image: '/Work/EVA/%E5%9F%BA%E6%9C%AC.png',
+    image: '/Work/EVA/even-01.png',
     detailId: 'eva',
   },
   {
